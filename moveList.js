@@ -34,6 +34,9 @@ const Getdata = (callback) =>
         
         result += " || ";
         }
+
+        console.log('MoveList보냄');
+        
         callback(result);
     });
 };

@@ -1,7 +1,8 @@
 //인터넷 페이지
 
 const express = require('express');
-const moveList = require('./moveList');
+const divide = require('./messageDivide');
+
 
 const app = express();
 const port = 5000;
@@ -26,8 +27,7 @@ wss.on('connection', function connection(client)
 {
     console.log('Client connected');
     client.on('message', function mss(message){
-        console.log('client: %s', message);
-        moveList.Getdata((result) => 
+        divide.Divide(message.toString(),(result) => 
         {
             client.send(result);
         })
@@ -35,3 +35,4 @@ wss.on('connection', function connection(client)
 
     client.send("ServerConnection");
 });
+

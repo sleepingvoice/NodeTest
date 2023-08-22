@@ -1,0 +1,15 @@
+const moveList = require('./moveList');
+
+exports.Divide = (message,callback) =>
+{
+    console.log('명령받음 : %s',message);
+    switch(message)
+    {
+        case 'CheckId' :
+            moveList.Getdata(callback);
+            break;
+        case 'Get_MoveList' :
+            break;
+
+    }
+}
