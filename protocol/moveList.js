@@ -1,6 +1,6 @@
-const sqlConnect = require('./sqlConnect');
+const sqlConnect = require('../sqlConnect');
 
-let res_get_users = 
+let res_let = 
 {
     users : [] 
 };
@@ -13,7 +13,7 @@ const Getdata = (callback) =>
         {
             rows.forEach((user)=>
             {
-                res_get_users.users.push
+                res_let.users.push
                 ({
                     userId : user.userId,
                     userPassword : user.userPassword,
@@ -24,13 +24,13 @@ const Getdata = (callback) =>
 
         var result = '';
 
-        for(var i=0; i < res_get_users.users.length; i++)
+        for(var i=0; i < res_let.users.length; i++)
         {
-        result += res_get_users.users[i].userId;
+        result += res_let.users[i].userId;
         result += ' / ';
-        result += res_get_users.users[i].userPassword;
+        result += res_let.users[i].userPassword;
         result += ' / ';
-        result += res_get_users.users[i].userName;
+        result += res_let.users[i].userName;
         
         result += " || ";
         }

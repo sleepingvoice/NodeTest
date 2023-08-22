@@ -1,4 +1,4 @@
-const moveList = require('./moveList');
+const moveList = require('./protocol/moveList');
 
 exports.Divide = (message,callback) =>
 {
