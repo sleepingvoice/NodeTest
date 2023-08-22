@@ -21,8 +21,6 @@ app.listen(port, ()=>
 const wsServer = require('ws').Server;
 var wss = new wsServer({ port: 4000});
 
-
-
 wss.on('connection', function connection(client)
 {
     console.log('Client connected');

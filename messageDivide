@@ -2,14 +2,15 @@ const moveList = require('./protocol/moveList');
 
 exports.Divide = (message,callback) =>
 {
+    var mss = message.split('/');
     console.log('명령받음 : %s',message);
-    switch(message)
+    switch(mss[0])
     {
-        case 'CheckId' :
-            moveList.Getdata(callback);
-            break;
         case 'Get_MoveList' :
+            moveList.Getdata(callback,mss[1]);
             break;
-
+        case 'Set_MoveList' :
+            moveList.Setdata(callback,mss[1]);
+            break;
     }
 }

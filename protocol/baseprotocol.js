@@ -5,9 +5,9 @@ let res_let =
 
 };
 
-const Getdata = (callback) =>
+const Getdata = (callback, id) =>
 {
-    sqlConnect.MessageQuery('select * from testtable;',(rows) =>
+    sqlConnect.MessageQuery('select * from testtable where is ' + id +';',(rows) =>
     {
         if(rows.length > 0)
         {
@@ -34,4 +34,13 @@ const Getdata = (callback) =>
     });
 };
 
-module.exports = {Getdata}
+const Setdata = (callback, data) =>
+{
+    sqlConnect.MessageQuery('insert into movelist(value) values ("' + data + '");',() =>
+    {
+        console.log('MoveList저장');
+        callback('MoveList 저장됨');
+    });
+};
+
+module.exports = {Getdata,Setdata}

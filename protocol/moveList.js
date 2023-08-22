@@ -5,9 +5,12 @@ let res_let =
     users : [] 
 };
 
-const Getdata = (callback) =>
+const Getdata = (callback,id) =>
 {
-    sqlConnect.MessageQuery('select * from testtable;',(rows) =>
+    var querystr = 'select * from movelist';
+    if(id != 0)
+        querystr += ' where id = ' + id;
+    sqlConnect.MessageQuery(querystr,(rows) =>
     {
         if(rows.length > 0)
         {
@@ -15,24 +18,24 @@ const Getdata = (callback) =>
             {
                 res_let.users.push
                 ({
-                    userId : user.userId,
-                    userPassword : user.userPassword,
-                    userName : user.userName,
+                    id : user.id,
+                    value : user.value
                 });
             });
         }
 
         var result = '';
 
-        for(var i=0; i < res_let.users.length; i++)
+        result += res_let.users[0].id;
+        result += ' / ';
+        result += res_let.users[0].value;
+
+        for(var i=1; i < res_let.users.length; i++)
         {
-        result += res_let.users[i].userId;
-        result += ' / ';
-        result += res_let.users[i].userPassword;
-        result += ' / ';
-        result += res_let.users[i].userName;
-        
-        result += " || ";
+            result += " || ";
+            result += res_let.users[i].id;
+            result += ' / ';
+            result += res_let.users[i].value;
         }
 
         console.log('MoveList보냄');
@@ -41,4 +44,13 @@ const Getdata = (callback) =>
     });
 };
 
-module.exports = {Getdata}
+const Setdata = (callback, data) =>
+{
+    sqlConnect.MessageQuery('insert into movelist(value) values ("' + data + '");',() =>
+    {
+        console.log('MoveList저장');
+        callback('MoveList 저장됨');
+    });
+};
+
+module.exports = {Getdata,Setdata}
