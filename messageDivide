@@ -1,4 +1,5 @@
 const moveList = require('./protocol/moveList');
+const checkLogin = require('./protocol/login');
 
 exports.Divide = (message,callback) =>
 {
@@ -12,5 +13,14 @@ exports.Divide = (message,callback) =>
         case 'Set_MoveList' :
             moveList.Setdata(callback,mss[1]);
             break;
+        case 'Check_Email' :
+            checkLogin.CheckEmail(callback,mss[1]);
+            break;
+        case 'Check_Login' :
+            checkLogin.CheckLogin(callback,mss[1],mss[2]);
+            break;
+        case 'Add_ID' :
+            checkLogin.AddId(callback,mss[1],mss[2],mss[3]);  
+            break;      
     }
 }
