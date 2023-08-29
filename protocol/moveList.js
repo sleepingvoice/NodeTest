@@ -40,7 +40,7 @@ const Getdata = (callback,id) =>
 
         console.log('MoveList보냄');
         
-        callback(result);
+        callback('Get_MoveList/' + result);
     });
 };
 
@@ -49,7 +49,7 @@ const Setdata = (callback, data) =>
     sqlConnect.MessageQuery('insert into movelist(value) values ("' + data + '");',() =>
     {
         console.log('MoveList저장');
-        callback('MoveList 저장됨');
+        callback('Set_MoveList/');
     });
 };
 
