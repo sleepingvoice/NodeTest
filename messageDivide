@@ -22,5 +22,9 @@ exports.Divide = (message,callback) =>
         case 'Add_ID' :
             checkLogin.AddId(callback,mss[1],mss[2],mss[3]);  
             break;      
+        case 'Find_ID' :
+            checkLogin.FindID(callback,mss[1]);
+        case 'Find_Pwd':
+             checkLogin.FindPwd(callback,mss[1],mss[2]);
     }
 }

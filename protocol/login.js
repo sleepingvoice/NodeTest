@@ -75,6 +75,71 @@ const CheckLogin = (callback, id, pwd) =>
     }
 };
 
+const FindID = async(callback,email) =>
+{
+    var mss = email.split('@');
+    console.log('select * from checkaccount where email like "' + mss[0] + '\@' + mss[1] +'";');
+    try{
+        await sqlConnect.MessageQuery('select * from checkaccount where email like "' + mss[0] + '\@' + mss[1] +'";', (rows)=>
+        {
+            var result = [];
+            if(rows.length > 0)
+            {
+                rows.forEach((user)=>
+                {
+                    sqlConnect.MessageQuery('select * from useraccount where userid = ' + user.userid + ';',(rows) =>
+                    {
+                        rows.forEach((values) => result.push(values.Id))
+                        
+                         console.log(result);
+
+                        callback('Find_ID/' + result);
+                    });
+                });
+            }
+            else
+            {
+                callback('Find_ID/false');
+            }
+        })
+    }catch(err){
+        console.log("ID찾기 오류")
+        console.log(err.message);
+    }
+}
+
+const FindPwd = async(callback,id,email) =>
+{
+    var mss = email.split('@');
+    console.log('select * from checkaccount where email like "' + mss[0] + '\@' + mss[1] +'";');
+    try{
+        await sqlConnect.MessageQuery('select * from checkaccount where email like "' + mss[0] + '\@' + mss[1] +'";', (rows)=>
+        {
+            var result = [];
+            if(rows.length > 0)
+            {
+                rows.forEach((user)=>
+                {
+                    sqlConnect.MessageQuery('select * from useraccount where userid = ' + user.userid + ' and Id = "' + id + '" ;',(rows) =>
+                    {
+                        rows.forEach((values) => result.push(values.pwd))
+                        
+                         console.log(result);
+
+                        callback('Find_Pwd/' + result);
+                    });
+                });
+            }
+            else
+            {
+                callback('Find_Pwd/false');
+            }
+        })
+    }catch(err){
+        console.log("Pwd찾기 오류")
+        console.log(err.message);
+    }
+}
 
 
-module.exports = {CheckLogin,CheckEmail,AddId}
+module.exports = {CheckLogin,CheckEmail,AddId,FindID,FindPwd}
