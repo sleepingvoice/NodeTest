@@ -1,3 +1,4 @@
+const { json } = require('express');
 const sqlConnect = require('../sqlConnect');
 
 let res_let = 
@@ -5,52 +6,31 @@ let res_let =
     users : [] 
 };
 
-const Getdata = (callback,id) =>
+const GetMap = (callback) =>
 {
-    var querystr = 'select * from movelist';
-    if(id != 0)
-        querystr += ' where id = ' + id;
-    sqlConnect.MessageQuery(querystr,(rows) =>
+    sqlConnect.MessageQuery( 'select * from usermapinfo',(rows) =>
     {
-        if(rows.length > 0)
-        {
-            rows.forEach((user)=>
-            {
-                res_let.users.push
-                ({
-                    id : user.id,
-                    value : user.value
-                });
-            });
-        }
-
         var result = '';
-
-        result += res_let.users[0].id;
-        result += ' / ';
-        result += res_let.users[0].value;
-
-        for(var i=1; i < res_let.users.length; i++)
-        {
-            result += " || ";
-            result += res_let.users[i].id;
-            result += ' / ';
-            result += res_let.users[i].value;
-        }
+        result = JSON.stringify(rows);
 
         console.log('MoveList보냄');
         
-        callback('Get_MoveList/' + result);
+        callback('Get_MapList/' + result);
     });
 };
 
-const Setdata = (callback, data) =>
+const AddMap = (callback, data) =>
 {
-    sqlConnect.MessageQuery('insert into movelist(value) values ("' + data + '");',() =>
+    var datajson = JSON.parse(data);
+    
+    var querystr = 'insert into usermapinfo(userId,codinate,movelist,enemyInfo) values (' + datajson.userId + '," '
+                    + datajson.codinate + '","' + datajson.movelist + '","' + datajson.enemyInfo + '");'
+
+    sqlConnect.MessageQuery(querystr,() =>
     {
-        console.log('MoveList저장');
-        callback('Set_MoveList/');
+        console.log('AddMap');
+        callback('AddMapSuccess');
     });
 };
 
-module.exports = {Getdata,Setdata}
+module.exports = {GetMap,AddMap}

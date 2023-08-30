@@ -8,7 +8,6 @@ let res_let =
 const CheckEmail = (callback, email) =>
 {
     var mss = email.split('@');
-    console.log('select * from checkaccount where email = "' + mss[0] + '\@' + mss[1] +'";');
     try{
         sqlConnect.MessageQuery('select * from checkaccount where email like "' + mss[0] + '\@' + mss[1] +'";',(rows) =>
         {
@@ -34,7 +33,6 @@ const AddId = (callback,id,pwd,email) =>
 {
     console.log(email);
     var mss = email.split('@');
-    console.log('insert into checkaccount(email) values ("' + mss[0] + '\@' + mss[1] + '");');
     try{
         sqlConnect.MessageQuery('insert into checkaccount(email) values ("' + mss[0] + '\@' + mss[1] + '");',() =>
         {
@@ -78,7 +76,6 @@ const CheckLogin = (callback, id, pwd) =>
 const FindID = async(callback,email) =>
 {
     var mss = email.split('@');
-    console.log('select * from checkaccount where email like "' + mss[0] + '\@' + mss[1] +'";');
     try{
         await sqlConnect.MessageQuery('select * from checkaccount where email like "' + mss[0] + '\@' + mss[1] +'";', (rows)=>
         {
@@ -111,7 +108,6 @@ const FindID = async(callback,email) =>
 const FindPwd = async(callback,id,email) =>
 {
     var mss = email.split('@');
-    console.log('select * from checkaccount where email like "' + mss[0] + '\@' + mss[1] +'";');
     try{
         await sqlConnect.MessageQuery('select * from checkaccount where email like "' + mss[0] + '\@' + mss[1] +'";', (rows)=>
         {

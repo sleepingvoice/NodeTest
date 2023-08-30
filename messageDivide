@@ -7,11 +7,11 @@ exports.Divide = (message,callback) =>
     console.log('명령받음 : %s',message);
     switch(mss[0])
     {
-        case 'Get_MoveList' :
-            moveList.Getdata(callback,mss[1]);
+        case 'Get_MapList' :
+            moveList.GetMap(callback);
             break;
-        case 'Set_MoveList' :
-            moveList.Setdata(callback,mss[1]);
+        case 'Add_Map' :
+            moveList.AddMap(callback,mss[1]);
             break;
         case 'Check_Email' :
             checkLogin.CheckEmail(callback,mss[1]);
