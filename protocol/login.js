@@ -1,10 +1,5 @@
 const sqlConnect = require('../sqlConnect');
 
-let res_let = 
-{
-    users : [] 
-};
-
 const CheckEmail = (callback, email) =>
 {
     var mss = email.split('@');
@@ -55,12 +50,15 @@ const AddId = (callback,id,pwd,email) =>
 const CheckLogin = (callback, id, pwd) =>
 {
     try{
-        sqlConnect.MessageQuery('select * from useraccount where Id = "' + id +'" and pwd = "' + pwd + '";',(rows) =>
+        sqlConnect.MessageQuery('select userid from useraccount where Id = "' + id +'" and pwd = "' + pwd + '";',(rows) =>
         {
             var result = "false";
+            var resultid = [];
             if(rows.length > 0)
             {
-                result = "true";
+                rows.forEach((values) => resultid.push(values.userid))
+
+                result = id + ":" + resultid;
             }
 
             console.log('Check_Login/' + result);
