@@ -16,9 +16,10 @@ const GetMap = (callback) =>
 const AddMap = (callback, data) =>
 {
     var datajson = JSON.parse(data);
-    console.log(datajson.mapImg);
-    var querystr = 'insert into usermapinfo(userId,codinate,movelist,enemyInfo,mapName) values (' + datajson.userId + '," '
-                    + datajson.codinate + '","' + datajson.movelist + '","' + datajson.enemyInfo + '","' + datajson.mapName + '");'
+
+    console.log(datajson);
+    var querystr = `INSERT INTO usermapinfo (userId, codinate, movelist, enemyInfo, mapName, mapImg) VALUES 
+    ('${datajson.userId}', '${datajson.codinate}', '${datajson.movelist}', '${datajson.enemyInfo}', '${datajson.mapName}', '${datajson.mapImg}')`;
 
     sqlConnect.MessageQuery(querystr,() =>
     {
