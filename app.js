@@ -3,6 +3,8 @@
 const express = require('express');
 const divide = require('./messageDivide');
 
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' })
 
 const app = express();
 const port = 5000;
@@ -16,6 +18,13 @@ app.listen(port, ()=>
 {
    console.log(`SERVER 실행됨 ${port}`);
 });
+
+app.post('/imgfile',upload.single('image') ,(req,res) =>
+{
+    console.log(req.file);
+    console.log("왔다!");
+    res.send("왔네?");
+})
 
 //웹소켓
 const wsServer = require('ws').Server;
@@ -33,4 +42,5 @@ wss.on('connection', function connection(client)
 
     client.send("ServerConnection");
 });
+
 
