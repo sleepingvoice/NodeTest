@@ -7,7 +7,7 @@ const GetMap = (callback) =>
         var result = '';
         result = JSON.stringify(rows);
 
-        console.log('MoveList보냄');
+        console.log('Send MapInfo');
         
         callback('Get_MapList/' + result);
     });
@@ -23,9 +23,10 @@ const AddMap = (callback, data) =>
 
     sqlConnect.MessageQuery(querystr,() =>
     {
-        console.log('AddMap');
+        console.log('Add MapInfo');
         callback('AddMapSuccess');
     });
 };
+
 
 module.exports = {GetMap,AddMap}

@@ -23,7 +23,7 @@ app.listen(port, ()=>
 app.post('/imgfile',upload.single('image') ,(req,res) =>
 {
     if (!req.file) {
-        res.status(400).send('No file uploaded.');
+        console.log("Image File Not Found");
         return;
     }
 
@@ -34,7 +34,7 @@ app.post('/imgfile',upload.single('image') ,(req,res) =>
 
     sqlConnect.MessageQuery(insertQuery,(result) =>
     {
-        console.log('MySQL에 이미지 정보 저장됨');
+        console.log('Add ImageFile');
         res.send(result.insertId.toString());
     })
 })
@@ -42,18 +42,20 @@ app.post('/imgfile',upload.single('image') ,(req,res) =>
 app.get('/getImage/:imageId', (req, res) => {
     const imageId = req.params.imageId;
     const insertQuery = `SELECT * FROM imgtable WHERE imgId = ${imageId}`;
-    console.log(insertQuery);
+    
     sqlConnect.MessageQuery(insertQuery,(result) =>
     {
         if (result.length === 0) {
-            res.status(404).send('Image not found.'); // 해당 ID에 대한 이미지를 찾지 못한 경우
+            console.log(insertQuery);
+            console.log("Image File Not Found");
             return;
         }
 
         var path = result[0].img;
         path = path.replace('uploads','uploads/');
-        console.log(path);
-        // 이미지 파일을 응답으로 보냅니다.
+        
+        console.log("Image File Send");
+        
         res.sendFile(path, { root: __dirname });
     })
 
