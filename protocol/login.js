@@ -31,7 +31,7 @@ const AddId = (callback,id,pwd,email) =>
         sqlConnect.MessageQuery('insert into useraccount(Id,pwd) values ("' + id + '","' + pwd + '");',(row) =>
         {
             console.log('id 추가');
-            callback('Add_ID/');
+            callback('Add_ID/Success');
         });
     });
 };
