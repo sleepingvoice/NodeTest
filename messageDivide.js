@@ -4,7 +4,6 @@ const checkLogin = require('./protocol/login');
 exports.Divide = (message,callback) =>
 {
     var mss = message.split('/');
-    console.log(message);
     switch(mss[0])
     {
         case 'Get_MapList' :
