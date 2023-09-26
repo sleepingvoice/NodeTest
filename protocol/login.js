@@ -9,7 +9,7 @@ const AddGuestId = (callback,NickName) =>
     var nowTime = new dayjs();
     var TokenValue = nowTime.format();
     console.log(TokenValue);
-    var EncryptText = security.Encrypt(TokenValue,securityKey,128);
+    var EncryptText = security.Encrypt(TokenValue,securityKey);
     
     sqlConnect.MessageQuery('insert into useraccount(nickName,userToken) values ("' + NickName + '","' + EncryptText + '");',(row) =>
     {
@@ -20,7 +20,7 @@ const AddGuestId = (callback,NickName) =>
 
 const AddUserId = (callback,NickName,GoogleToken) =>
 {
-    var EncryptText = security.Encrypt(GoogleToken,securityKey,128);
+    var EncryptText = security.Encrypt(GoogleToken,securityKey);
     console.log("id 추가" + EncryptText);
     sqlConnect.MessageQuery('insert into useraccount(nickName,userToken) values ("' + NickName + '","' + EncryptText + '");',(row) =>
     {
@@ -42,7 +42,7 @@ const CheckLogin = (callback, GoogleToken) =>
             rows.forEach((values) =>  
             {
                 console.log(values.userToken);
-                var token = security.Decrypt(values.userToken);
+                var token = security.Decrypt(values.userToken,securityKey);
                 if(token == GoogleToken)
                 {
                     TockenValue = token;
