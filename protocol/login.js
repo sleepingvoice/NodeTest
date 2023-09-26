@@ -14,7 +14,7 @@ const AddGuestId = (callback,NickName) =>
     sqlConnect.MessageQuery('insert into useraccount(nickName,userToken) values ("' + NickName + '","' + EncryptText + '");',(row) =>
     {
         console.log('id 추가');
-        callback('Add_ID/Success');
+        callback('Add_ID/' + TokenValue);
     });
 };
 
@@ -25,7 +25,7 @@ const AddUserId = (callback,NickName,GoogleToken) =>
     sqlConnect.MessageQuery('insert into useraccount(nickName,userToken) values ("' + NickName + '","' + EncryptText + '");',(row) =>
     {
         console.log('id 추가');
-        callback('Add_ID/Success');
+        callback('Add_ID/' + GoogleToken);
     });
 };
 
