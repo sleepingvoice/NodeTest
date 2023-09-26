@@ -1,53 +1,48 @@
 const sqlConnect = require('../sqlConnect');
+const security = require('./security');
+const dayjs = require("dayjs");
 
-const CheckEmail = (callback, email) =>
+var securityKey = "Gu";
+
+const AddGuestId = (callback,NickName) =>
 {
-    var mss = email.split('@');
-
-    sqlConnect.MessageQuery('select * from checkaccount where email like "' + mss[0] + '\@' + mss[1] +'";',(rows) =>
+    var nowTime = new dayjs();
+    var TokenValue = nowTime.format();
+    console.log(TokenValue);
+    var EncryptText = security.Encrypt(TokenValue,securityKey,128);
+    
+    sqlConnect.MessageQuery('insert into useraccount(nickName,userToken) values ("' + NickName + '","' + EncryptText + '");',(row) =>
     {
-        console.log(rows);
-        var result = 'true';
-        if(rows.length > 0)
-        {
-            result = 'repeat';
-        }
-        
-        console.log(result);
-        
-        callback('Check_Email/' + result);
+        console.log('id 추가');
+        callback('Add_ID/Success');
     });
 };
 
-const AddId = (callback,id,pwd,email) =>
+const AddUserId = (callback,NickName,GoogleToken) =>
 {
-    console.log(email);
-    var mss = email.split('@');
-
-    sqlConnect.MessageQuery('insert into checkaccount(email) values ("' + mss[0] + '\@' + mss[1] + '");',() =>
+    var EncryptText = security.Encrypt(GoogleToken,securityKey,128);
+    
+    sqlConnect.MessageQuery('insert into useraccount(nickName,userToken) values ("' + NickName + '","' + EncryptText + '");',(row) =>
     {
-        console.log('이메일 저장');
-        callback('이메일 저장완료');
-        sqlConnect.MessageQuery('insert into useraccount(Id,pwd) values ("' + id + '","' + pwd + '");',(row) =>
-        {
-            console.log('id 추가');
-            callback('Add_ID/Success');
-        });
+        console.log('id 추가');
+        callback('Add_ID/Success');
     });
 };
 
 
-const CheckLogin = (callback, id, pwd) =>
+const CheckLogin = (callback, GoogleToken) =>
 {
-    sqlConnect.MessageQuery('select userid from useraccount where Id = "' + id +'" and pwd = "' + pwd + '";',(rows) =>
+    var EncryptText = security.Encrypt(GoogleToken,securityKey,128);
+
+    sqlConnect.MessageQuery('select userid from useraccount where userToken = "' + EncryptText +'";',(rows) =>
     {
         var result = "false";
         var resultid = [];
         if(rows.length > 0)
         {
-            rows.forEach((values) => resultid.push(values.userid))
+            rows.forEach((values) => resultid.push(values.nickName + ":" + values.userid))
 
-            result = id + ":" + resultid;
+            result = resultid;
         }
 
         console.log("로그인 체크 : " + result);
@@ -56,59 +51,6 @@ const CheckLogin = (callback, id, pwd) =>
     });
 };
 
-const FindID = (callback,email) =>
-{
-    var mss = email.split('@');
-    sqlConnect.MessageQuery('select * from checkaccount where email like "' + mss[0] + '\@' + mss[1] +'";', (rows)=>
-    {
-        var result = [];
-        if(rows.length > 0)
-        {
-            rows.forEach((user)=>
-            {
-                sqlConnect.MessageQuery('select * from useraccount where userid = ' + user.userid + ';',(rows) =>
-                {
-                    rows.forEach((values) => result.push(values.Id))
-                        
-                    console.log(result);
-
-                    callback('Find_ID/' + result);
-                });
-            });
-        }
-        else
-        {
-            callback('Find_ID/false');
-        }
-    });
-}
-
-const FindPwd = (callback,id,email) =>
-{
-    var mss = email.split('@');
-    sqlConnect.MessageQuery('select * from checkaccount where email like "' + mss[0] + '\@' + mss[1] +'";', (rows)=>
-    {
-        var result = [];
-        if(rows.length > 0)
-        {
-            rows.forEach((user)=>
-            {
-                sqlConnect.MessageQuery('select * from useraccount where userid = ' + user.userid + ' and Id = "' + id + '" ;',(rows) =>
-                {
-                    rows.forEach((values) => result.push(values.pwd))
-                        
-                    console.log("Find Pwd / Success");
-
-                    callback('Find_Pwd/' + result);
-                });
-            });
-        }
-        else
-        {
-            callback('Find_Pwd / failure');
-        }
-    });
-}
 
 
-module.exports = {CheckLogin,CheckEmail,AddId,FindID,FindPwd}
+module.exports = {AddGuestId,AddUserId,CheckLogin}

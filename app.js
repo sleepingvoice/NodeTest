@@ -1,5 +1,3 @@
-//인터넷 페이지
-
 const express = require('express');
 const divide = require('./messageDivide');
 
@@ -9,6 +7,8 @@ const sqlConnect = require('./sqlConnect');
 
 const app = express();
 const port = 5000;
+
+app.set("port",process.env.PORT || 5000);
 
 app.get('/', (req, res)=>
 {

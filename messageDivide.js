@@ -13,18 +13,14 @@ exports.Divide = (message,callback) =>
         case 'Add_Map' :
             moveList.AddMap(callback,mss[1]);
             break;
-        case 'Check_Email' :
-            checkLogin.CheckEmail(callback,mss[1]);
-            break;
         case 'Check_Login' :
-            checkLogin.CheckLogin(callback,mss[1],mss[2]);
+            checkLogin.CheckLogin(callback,mss[1]);
             break;
-        case 'Add_ID' :
-            checkLogin.AddId(callback,mss[1],mss[2],mss[3]);  
+        case 'Add_GuestID' :
+            checkLogin.AddGuestId(callback,mss[1]);  
+            break;
+        case 'Add_UserID' :
+            checkLogin.AddUserId(callback,mss[1],mss[2]);  
             break;      
-        case 'Find_ID' :
-            checkLogin.FindID(callback,mss[1]);
-        case 'Find_Pwd':
-             checkLogin.FindPwd(callback,mss[1],mss[2]);
     }
 }

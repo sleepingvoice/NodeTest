@@ -16,9 +16,14 @@ const getconnectionPool = async (callback) =>
 {
     pool.getConnection((err,conn) => 
     {
-        if(!err) 
+        if(!err) {
             callback(conn)
-        conn.release();
+            conn.release();
+        }
+        else
+        {
+            console.error('Error getting connection : ',err);
+        }
     });
 }
 
