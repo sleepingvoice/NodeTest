@@ -33,7 +33,7 @@ const AddUserId = (callback,NickName,GoogleToken) =>
 const CheckLogin = (callback, GoogleToken) =>
 {
     var EncryptText = security.Encrypt(GoogleToken,securityKey,128);
-
+    console.log("로그인 체크 받음");
     sqlConnect.MessageQuery('select userid from useraccount where userToken = "' + EncryptText +'";',(rows) =>
     {
         var result = "false";
