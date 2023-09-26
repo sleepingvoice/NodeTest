@@ -41,11 +41,10 @@ const CheckLogin = (callback, GoogleToken) =>
         {
             rows.forEach((values) =>  
             {
-                console.log(values.userToken);
                 var token = security.Decrypt(values.userToken,securityKey);
                 if(token == GoogleToken)
                 {
-                    console.log("있음");
+                    console.log(token + "있음" + GoogleToken);
                     TockenValue = token;
                 }
             })
