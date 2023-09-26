@@ -32,25 +32,43 @@ const AddUserId = (callback,NickName,GoogleToken) =>
 
 const CheckLogin = (callback, GoogleToken) =>
 {
-    var EncryptText = security.Encrypt(GoogleToken,securityKey,128);
     console.log("id 체크" + EncryptText);
 
     console.log("로그인 체크 받음");
-    sqlConnect.MessageQuery('select userid from useraccount where userToken = "' + EncryptText +'";',(rows) =>
-    {
-        var result = "false";
-        var resultid = [];
-        if(rows.length > 0)
-        {
-            rows.forEach((values) => resultid.push(values.nickName + ":" + values.userid))
 
-            result = resultid;
+    var TockenValue;
+    sqlConnect.MessageQuery('select userToken from useraccount',(rows) =>
+    {
+        if(rows.length >0)
+        {
+            rows.forEach((values) =>  
+            {
+                var token = security.Decrypt(values.userToken);
+                if(token == GoogleToken)
+                {
+                    TockenValue = token;
+                }
+            })
         }
 
-        console.log("로그인 체크 : " + result);
+        sqlConnect.MessageQuery('select userid from useraccount where userToken = "' + TockenValue +'";',(rows) =>
+        {
+            var result = "false";
+            var resultid = [];
+            if(rows.length > 0)
+            {
+                rows.forEach((values) => resultid.push(values.nickName + ":" + values.userid))
+    
+                result = resultid;
+            }
+    
+            console.log("로그인 체크 : " + result);
+    
+            callback('Check_Login/' +result);
+        });
+    })
 
-        callback('Check_Login/' +result);
-    });
+
 };
 
 
