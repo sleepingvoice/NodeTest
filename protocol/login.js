@@ -44,21 +44,22 @@ const CheckLogin = (callback, GoogleToken) =>
                 var token = security.Decrypt(values.userToken,securityKey);
                 if(token == GoogleToken)
                 {
-                    console.log(token + "있음" + GoogleToken);
-                    TockenValue = values.userToken,securityKey;
+                    console.log("있음");
+                    TockenValue = values.userToken;
                 }
             })
         }
 
-        sqlConnect.MessageQuery('select userid from useraccount where userToken = "' + TockenValue +'";',(rows) =>
+        sqlConnect.MessageQuery('select * from useraccount where userToken = "' + TockenValue +'";',(rows) =>
         {
             var result = "false";
-            var resultid = [];
             if(rows.length > 0)
             {
-                rows.forEach((values) => resultid.push(values.nickName + ":" + values.userid))
-    
-                result = resultid;
+                rows.forEach((values) => 
+                {
+                    result = "";
+                    result += values.nickName + ":" + values.userid;
+                })
             }
     
             console.log("로그인 체크 : " + result);
