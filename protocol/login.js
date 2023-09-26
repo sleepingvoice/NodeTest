@@ -42,7 +42,6 @@ const CheckLogin = (callback, GoogleToken) =>
             rows.forEach((values) =>  
             {
                 var token = security.Decrypt(values.userToken,securityKey);
-                console.log(token);
                 if(token == GoogleToken)
                 {
                     console.log("있음");
