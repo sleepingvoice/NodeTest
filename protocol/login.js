@@ -45,7 +45,7 @@ const CheckLogin = (callback, GoogleToken) =>
                 if(token == GoogleToken)
                 {
                     console.log(token + "있음" + GoogleToken);
-                    TockenValue = token;
+                    TockenValue = values.userToken,securityKey;
                 }
             })
         }
