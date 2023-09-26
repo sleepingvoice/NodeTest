@@ -32,8 +32,6 @@ const AddUserId = (callback,NickName,GoogleToken) =>
 
 const CheckLogin = (callback, GoogleToken) =>
 {
-    console.log("id 체크" + EncryptText);
-
     console.log("로그인 체크 받음");
 
     var TockenValue;
