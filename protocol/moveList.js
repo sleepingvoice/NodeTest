@@ -24,7 +24,7 @@ const AddMap = (callback, data) =>
     sqlConnect.MessageQuery(querystr,() =>
     {
         console.log('Add MapInfo');
-        callback('AddMapSuccess');
+        callback('Add_Map/Success');
     });
 };
 
